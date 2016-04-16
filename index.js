@@ -31,8 +31,14 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
             var basePath = path.resolve(p);
             var fullPath = path.resolve(p, name);
             if (fullPath.indexOf(basePath) === 0) {
-                var stat = yield fsStat(fullPath);
-                if (stat.isFile()) {
+                var stat;
+                try {
+                    stat = yield fsStat(fullPath);
+                } catch (err) {
+                    stat = null;
+                }
+                
+                if (stat && stat.isFile()) {
                     var data = yield fsReadFile(fullPath, 'utf-8');
                     res = {src: data, path: fullPath, noCache: this.noCache};
                     break;
