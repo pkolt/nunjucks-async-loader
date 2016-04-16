@@ -1,0 +1,38 @@
+{
+  "name": "nunjucks-async-loader",
+  "version": "0.1.0",
+  "description": "Asynchronous loader templates nunjucks",
+  "keywords": [
+    "express",
+    "nunjucks",
+    "template",
+    "loader"
+  ],
+  "bugs": {
+    "url": "https://github.com/pkolt/nunjucks-async-loader/issues",
+    "email": "pkoltyshev@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Pavel Koltyshev <pkoltyshev@gmail.com>",
+  "files": [
+    "README.md",
+    "LICENSE.md",
+    "index.js"
+  ],
+  "main": "index.js",
+  "repository": "pkolt/nunjucks-async-loader",
+  "scripts": {
+    "test": "env JASMINE_CONFIG_PATH='./test/jasmine.json' jasmine"
+  },
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.3.5",
+    "co": "^4.6.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.1",
+    "nunjucks": "^2.4.2"
+  }
+}
