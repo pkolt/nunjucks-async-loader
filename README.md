@@ -4,8 +4,8 @@
 
 ## Why You Need?
 
-  [nunjucks.FileSystemLoader](https://mozilla.github.io/nunjucks/api.html#filesystemloader) loads templates synchronously.  
-  And does not support asynchronous loading of templates. See this [issue](https://github.com/mozilla/nunjucks/issues/726).
+  [nunjucks.FileSystemLoader](https://mozilla.github.io/nunjucks/api.html#filesystemloader) loads templates synchronously.
+  See this [issue](https://github.com/mozilla/nunjucks/issues/726).
 
 ## Installation
 
