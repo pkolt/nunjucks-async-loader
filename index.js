@@ -1,22 +1,68 @@
+'use strict';
+
 var fs = require('fs');
 var path = require('path');
 var nunjucks = require('nunjucks');
 var co = require('co');
-var Promise = require('bluebird');
+var chokidar = require('chokidar');
+var promisify = require('es6-promisify');
 
-var fsStat = Promise.promisify(fs.stat);
-var fsReadFile = Promise.promisify(fs.readFile);
+var fsStat = promisify(fs.stat);
+var fsReadFile = promisify(fs.readFile);
+
 
 var FileSystemAsyncLoader = nunjucks.Loader.extend({
     async: true,
 
     init: function(searchPaths, opts) {
         opts = opts || {};
+        this.pathsToNames = {};
 
-        searchPaths = typeof searchPaths === 'string' ? [searchPaths] : searchPaths;
-        this.searchPaths = searchPaths || ['.'];
+        if (searchPaths) {
+            searchPaths = Array.isArray(searchPaths) ? searchPaths : [searchPaths];
+            searchPaths = searchPaths.map(path.normalize);
+        } else {
+            searchPaths = ['.'];
+        }
+
+        this.searchPaths = searchPaths;
         this.noCache = !!opts.noCache;
+
+        if (opts.watch) {
+            this.watchDirs(searchPaths).catch(console.error);
+        }
     },
+
+    watchDirs: co.wrap(function*(searchPaths) {
+        var paths = [];
+
+        for (var i = 0; i < searchPaths.length; i++) {
+            var fullPath = path.resolve(searchPaths[i]);
+            var stat;
+            try {
+                stat = yield fsStat(fullPath);
+            } catch (err) {
+                stat = null;
+            }
+            if (stat && stat.isDirectory()) {
+                paths.push(fullPath);
+            }
+        }
+
+        var self = this;
+        var watcher = chokidar.watch(paths);
+
+        watcher.on('all', function(event, fullPath) {
+            fullPath = path.resolve(fullPath);
+            if (event === 'change' && fullPath in self.pathsToNames) {
+                self.emit('update', self.pathsToNames[fullPath]);
+            }
+        });
+
+        watcher.on('error', function(error) {
+            console.error('Watcher error: ' + error);
+        });
+    }),
 
     getSourceAsync: co.wrap(function*(name) {
         var res = null;
@@ -41,6 +87,7 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
                 if (stat && stat.isFile()) {
                     var data = yield fsReadFile(fullPath, 'utf-8');
                     res = {src: data, path: fullPath, noCache: this.noCache};
+                    this.pathsToNames[fullPath] = name;
                     break;
                 }
             }

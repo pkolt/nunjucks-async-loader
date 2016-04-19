@@ -1,6 +1,6 @@
 {
   "name": "nunjucks-async-loader",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Asynchronous loader templates nunjucks",
   "keywords": [
     "express",
@@ -28,8 +28,9 @@
     "node": ">= 4"
   },
   "dependencies": {
-    "bluebird": "^3.3.5",
-    "co": "^4.6.0"
+    "chokidar": "^1.4.3",
+    "co": "^4.6.0",
+    "es6-promisify": "^4.0.0"
   },
   "devDependencies": {
     "jasmine": "^2.4.1",
