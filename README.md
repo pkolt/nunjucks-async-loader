@@ -21,10 +21,11 @@ const nunjucks = require('nunjucks');
 const nunjucksAsyncLoader = require('nunjucks-async-loader');
 
 const app = express();
+const isDev = app.get('env') === 'development';
 
 const loader = new nunjucksAsyncLoader('views', {
-    watch: false, // (default: false) reload templates when they are changed.
-    noCache: false // (default: false) never use a cache and recompile templates each time.
+    watch: isDev, // (default: false) reload templates when they are changed.
+    noCache: isDev // (default: false) never use a cache and recompile templates each time.
 });
 
 const env = new nunjucks.Environment(loader);
