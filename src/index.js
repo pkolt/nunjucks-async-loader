@@ -1,17 +1,17 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var nunjucks = require('nunjucks');
-var co = require('co');
-var chokidar = require('chokidar');
-var promisify = require('es6-promisify');
+import 'babel-polyfill';
+import fs from 'fs';
+import path from 'path'
+import nunjucks from 'nunjucks';
+import chokidar from 'chokidar';
+import promisify from 'es6-promisify';
 
-var fsStat = promisify(fs.stat);
-var fsReadFile = promisify(fs.readFile);
+const fsStat = promisify(fs.stat);
+const fsReadFile = promisify(fs.readFile);
 
 
-var FileSystemAsyncLoader = nunjucks.Loader.extend({
+const FileSystemAsyncLoader = nunjucks.Loader.extend({
     async: true,
 
     init: function(searchPaths, opts) {
@@ -33,14 +33,14 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
         }
     },
 
-    watchDirs: co.wrap(function*(searchPaths) {
+    watchDirs: async function(searchPaths) {
         var paths = [];
 
         for (var i = 0; i < searchPaths.length; i++) {
             var fullPath = path.resolve(searchPaths[i]);
             var stat;
             try {
-                stat = yield fsStat(fullPath);
+                stat = await fsStat(fullPath);
             } catch (err) {
                 stat = null;
             }
@@ -52,19 +52,19 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
         var self = this;
         var watcher = chokidar.watch(paths);
 
-        watcher.on('all', function(event, fullPath) {
+        watcher.on('all', (event, fullPath) => {
             fullPath = path.resolve(fullPath);
             if (event === 'change' && fullPath in self.pathsToNames) {
                 self.emit('update', self.pathsToNames[fullPath]);
             }
         });
 
-        watcher.on('error', function(error) {
-            console.error('Watcher error: ' + error);
+        watcher.on('error', err => {
+            console.error('Watcher error: ' + err);
         });
-    }),
+    },
 
-    getSourceAsync: co.wrap(function*(name) {
+    getSourceAsync: async function(name) {
         var res = null;
         var paths = this.searchPaths;
 
@@ -79,13 +79,13 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
             if (fullPath.indexOf(basePath) === 0) {
                 var stat;
                 try {
-                    stat = yield fsStat(fullPath);
+                    stat = await fsStat(fullPath);
                 } catch (err) {
                     stat = null;
                 }
-                
+
                 if (stat && stat.isFile()) {
-                    var data = yield fsReadFile(fullPath, 'utf-8');
+                    var data = await fsReadFile(fullPath, 'utf-8');
                     res = {src: data, path: fullPath, noCache: this.noCache};
                     this.pathsToNames[fullPath] = name;
                     break;
@@ -93,7 +93,7 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
             }
         }
         return res;
-    }),
+    },
 
     getSource: function(name, cb) {
         this.getSourceAsync(name)
@@ -104,4 +104,4 @@ var FileSystemAsyncLoader = nunjucks.Loader.extend({
     }
 });
 
-module.exports = FileSystemAsyncLoader;
+export default FileSystemAsyncLoader;
