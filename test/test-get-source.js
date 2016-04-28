@@ -1,13 +1,13 @@
 'use strict';
 
-import test from 'ava';
-import path from 'path';
-import promisify from 'es6-promisify';
-import nunjucksAsyncLoader from '../lib/index';
+const test = require('ava');
+const path = require('path');
+const promisify  = require('es6-promisify');
+const nunjucksAsyncLoader = require('../index');
 
 
-var BASE_DIR = path.join(__dirname, 'templates');
-var APP_DIR = path.join(__dirname, 'app/templates');
+const BASE_DIR = path.join(__dirname, 'templates');
+const APP_DIR = path.join(__dirname, 'app/templates');
 
 var loader = null;
 var getSource = null;

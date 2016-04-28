@@ -1,11 +1,11 @@
 'use strict';
 
-import 'babel-polyfill';
-import fs from 'fs';
-import path from 'path'
-import nunjucks from 'nunjucks';
-import chokidar from 'chokidar';
-import promisify from 'es6-promisify';
+const co = require('co');
+const fs = require('fs');
+const path = require('path');
+const nunjucks = require('nunjucks');
+const chokidar = require('chokidar');
+const promisify = require('es6-promisify');
 
 const fsStat = promisify(fs.stat);
 const fsReadFile = promisify(fs.readFile);
@@ -33,14 +33,14 @@ const FileSystemAsyncLoader = nunjucks.Loader.extend({
         }
     },
 
-    watchDirs: async function(searchPaths) {
+    watchDirs: co.wrap(function*(searchPaths) {
         var paths = [];
 
         for (var i = 0; i < searchPaths.length; i++) {
             var fullPath = path.resolve(searchPaths[i]);
             var stat;
             try {
-                stat = await fsStat(fullPath);
+                stat = yield fsStat(fullPath);
             } catch (err) {
                 stat = null;
             }
@@ -62,9 +62,9 @@ const FileSystemAsyncLoader = nunjucks.Loader.extend({
         watcher.on('error', err => {
             console.error('Watcher error: ' + err);
         });
-    },
+    }),
 
-    getSourceAsync: async function(name) {
+    getSourceAsync: co.wrap(function*(name) {
         var res = null;
         var paths = this.searchPaths;
 
@@ -79,13 +79,13 @@ const FileSystemAsyncLoader = nunjucks.Loader.extend({
             if (fullPath.indexOf(basePath) === 0) {
                 var stat;
                 try {
-                    stat = await fsStat(fullPath);
+                    stat = yield fsStat(fullPath);
                 } catch (err) {
                     stat = null;
                 }
 
                 if (stat && stat.isFile()) {
-                    var data = await fsReadFile(fullPath, 'utf-8');
+                    var data = yield fsReadFile(fullPath, 'utf-8');
                     res = {src: data, path: fullPath, noCache: this.noCache};
                     this.pathsToNames[fullPath] = name;
                     break;
@@ -93,7 +93,7 @@ const FileSystemAsyncLoader = nunjucks.Loader.extend({
             }
         }
         return res;
-    },
+    }),
 
     getSource: function(name, cb) {
         this.getSourceAsync(name)
@@ -104,4 +104,4 @@ const FileSystemAsyncLoader = nunjucks.Loader.extend({
     }
 });
 
-export default FileSystemAsyncLoader;
+module.exports = FileSystemAsyncLoader;

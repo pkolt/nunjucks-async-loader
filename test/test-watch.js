@@ -1,17 +1,17 @@
 'use strict';
 
-import test from 'ava';
-import fs from 'fs';
-import path from 'path';
-import promisify from 'es6-promisify';
-import nunjucksAsyncLoader from '../lib/index';
+const test = require('ava');
+const fs = require('fs');
+const path = require('path');
+const promisify  = require('es6-promisify');
+const nunjucksAsyncLoader = require('../index');
 
 
-var fsStat = promisify(fs.stat);
-var fsUnlink = promisify(fs.unlink);
-var fsWriteFile = promisify(fs.writeFile);
+const fsStat = promisify(fs.stat);
+const fsUnlink = promisify(fs.unlink);
+const fsWriteFile = promisify(fs.writeFile);
 
-var BASE_DIR = path.join(__dirname, 'templates');
+const BASE_DIR = path.join(__dirname, 'templates');
 
 var loader = null;
 var getSource = null;
