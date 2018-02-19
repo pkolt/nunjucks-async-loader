@@ -28,7 +28,7 @@
     "node": ">= 4"
   },
   "dependencies": {
-    "chokidar": "^1.4.3",
+    "chokidar": "^2.0.0",
     "co": "^4.6.0",
     "es6-promisify": "^4.0.0"
   },
