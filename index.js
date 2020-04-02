@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const chokidar = require('chokidar');
-const promisify = require('es6-promisify');
+const promisify = require('util').promisify;
 
 const fsStat = promisify(fs.stat);
 const fsReadFile = promisify(fs.readFile);

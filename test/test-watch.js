@@ -3,7 +3,7 @@
 const test = require('ava');
 const fs = require('fs');
 const path = require('path');
-const promisify  = require('es6-promisify');
+const promisify  = require('util').promisify;
 const nunjucksAsyncLoader = require('../index');
 
 

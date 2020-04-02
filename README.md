@@ -1,4 +1,4 @@
-# nunjucks-async-loader [![Build Status](https://travis-ci.org/pkolt/nunjucks-async-loader.svg?branch=master)](https://travis-ci.org/pkolt/nunjucks-async-loader)
+# nunjucks-async-loader ![](https://github.com/pkolt/nunjucks-async-loader/workflows/main/badge.svg)
 
   Asynchronous loader templates [nunjucks](http://mozilla.github.io/nunjucks/).
 
