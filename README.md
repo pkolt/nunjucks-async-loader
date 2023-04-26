@@ -10,20 +10,20 @@
 ## Installation
 
 ```bash
-$ npm install nunjucks-async-loader --save
+$ npm i nunjucks-async-loader
 ```
 
 ## Usage
 
-```javascript
-const express = require('express');
-const nunjucks = require('nunjucks');
-const nunjucksAsyncLoader = require('nunjucks-async-loader');
+```typescript
+import express from 'express';
+import nunjucks from 'nunjucks';
+import { FileSystemAsyncLoader } from 'nunjucks-async-loader';
 
 const app = express();
 const isDev = app.get('env') === 'development';
 
-const loader = new nunjucksAsyncLoader('views', {
+const loader = new FileSystemAsyncLoader('views', {
     watch: isDev, // (default: false) reload templates when they are changed.
     noCache: isDev // (default: false) never use a cache and recompile templates each time.
 });
@@ -45,7 +45,7 @@ app.listen(3000);
   To run the test suite, first install the dependencies, then run `npm test`:
 
 ```bash
-$ npm install
+$ npm ci
 $ npm test
 ```
 
