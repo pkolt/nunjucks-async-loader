@@ -1,6 +1,8 @@
 # nunjucks-async-loader ![](https://github.com/pkolt/nunjucks-async-loader/workflows/main/badge.svg)
 
-  Asynchronous loader templates [nunjucks](http://mozilla.github.io/nunjucks/).
+Asynchronous loader templates [nunjucks](http://mozilla.github.io/nunjucks/).
+
+Supports ESM modules 👍
 
 ## Why You Need?
 
