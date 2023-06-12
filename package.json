@@ -39,7 +39,7 @@
   ],
   "repository": "pkolt/nunjucks-async-loader",
   "scripts": {
-    "test": "ts-node-esm src/test/test.ts",
+    "test": "node --loader ts-node/esm --test --no-warnings ./src/*.test.ts",
     "build-esm": "tsc",
     "build-cjs": "tsc -p ./tsconfig.cjs.json",
     "build-types": "tsc -p ./tsconfig.types.json",
