@@ -2,13 +2,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { lstat, unlink, writeFile } from 'node:fs/promises';
 import { describe, it, beforeEach, afterEach } from 'node:test';
-import assert from 'node:assert';
+import assert from 'node:assert/strict';
 import { promisify } from 'node:util';
-import { FileSystemAsyncLoader } from '../index.js';
+import { FileSystemAsyncLoader } from './index.js';
 import { type LoaderSource } from 'nunjucks';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.join(path.dirname(__filename), './test');
 
 const BASE_DIR = path.join(__dirname, 'templates');
 const APP_DIR = path.join(__dirname, 'app/templates');
