@@ -21,6 +21,8 @@ $ npm i nunjucks-async-loader
 import express from 'express';
 import nunjucks from 'nunjucks';
 import { FileSystemAsyncLoader } from 'nunjucks-async-loader';
+// For CommonJS
+// const { FileSystemAsyncLoader } = require('nunjucks-async-loader').default;
 
 const app = express();
 const isDev = app.get('env') === 'development';
@@ -40,6 +42,22 @@ app.get('/', function(req, res) {
 });
 
 app.listen(3000);
+```
+
+## TypeScript
+
+If you're having trouble importing a module into TypeScript, try adding settings:
+
+```json
+// tsconfig.json
+{
+    "compilerOptions": {
+      //...
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      //...
+    }
+  }
 ```
 
 ## Tests
