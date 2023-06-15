@@ -1,6 +1,6 @@
 {
   "name": "nunjucks-async-loader",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Asynchronous loader templates nunjucks",
   "type": "module",
   "module": "./dist/esm/index.js",
