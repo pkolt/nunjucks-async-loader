@@ -2,7 +2,7 @@
     "compilerOptions": {
       "rootDir": "./src",
       "strict": true,
-      "allowSyntheticDefaultImports": true
+      "esModuleInterop": true
     },
     "include": ["src/index.ts"],
     "exclude": ["node_modules"]
