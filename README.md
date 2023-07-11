@@ -21,8 +21,6 @@ $ npm i nunjucks-async-loader
 import express from 'express';
 import nunjucks from 'nunjucks';
 import { FileSystemAsyncLoader } from 'nunjucks-async-loader';
-// For CommonJS
-// const { FileSystemAsyncLoader } = require('nunjucks-async-loader').default;
 
 const app = express();
 const isDev = app.get('env') === 'development';
