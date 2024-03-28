@@ -47,16 +47,16 @@
     "node": ">= 18"
   },
   "dependencies": {
-    "chokidar": "3.3.1"
+    "chokidar": "^3.6.0"
   },
   "devDependencies": {
-    "@types/nunjucks": "^3.2.2",
-    "prettier": "^2.8.8",
-    "release-it": "^15.10.1",
-    "rimraf": "^5.0.0",
-    "ts-node": "^10.9.1",
-    "ts-rename": "^0.1.0",
-    "typescript": "^5.0.4"
+    "@types/nunjucks": "^3.2.6",
+    "prettier": "^3.2.5",
+    "release-it": "^17.1.1",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "ts-rename": "^0.2.0",
+    "typescript": "^5.4.3"
   },
   "peerDependencies": {
     "nunjucks": "^3.2.4"
